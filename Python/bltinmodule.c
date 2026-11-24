@@ -3341,9 +3341,20 @@ PyTypeObject PyZip_Type = {
     PyObject_GC_Del,                    /* tp_free */
     .tp_vectorcall = zip_vectorcall,
 };
+static PyObject *
+builtin_greet(PyObject *self, PyObject *arg)
+{
+    printf("MyCustomPython says: ");
+    if (PyObject_Print(arg, stdout, Py_PRINT_RAW) < 0) {
+        return NULL;
+    }
+    printf("\n");
+    Py_RETURN_NONE;
+}
 
 
-static PyMethodDef builtin_methods[] = {
+static PyMethodDef builtin_methods[] = {    {"greet", builtin_greet, METH_O, "Print a custom greeting."},
+
     {"__build_class__", _PyCFunction_CAST(builtin___build_class__),
      METH_FASTCALL | METH_KEYWORDS, build_class_doc},
     BUILTIN___IMPORT___METHODDEF
