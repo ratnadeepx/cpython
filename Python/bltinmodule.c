@@ -3344,11 +3344,17 @@ PyTypeObject PyZip_Type = {
 static PyObject *
 builtin_greet(PyObject *self, PyObject *arg)
 {
-    printf("MyCustomPython says: ");
-    if (PyObject_Print(arg, stdout, Py_PRINT_RAW) < 0) {
-        return NULL;
+    if (PyUnicode_Check(arg) && PyUnicode_CompareWithASCIIString(arg, "Boss") == 0) {
+        printf("Welcome back, Boss!\n");
     }
-    printf("\n");
+    else {
+        printf("Namaste, ");
+        if (PyObject_Print(arg, stdout, Py_PRINT_RAW) < 0) {
+            return NULL;
+        }
+        printf("\n");
+    }
+    fflush(stdout);
     Py_RETURN_NONE;
 }
 
